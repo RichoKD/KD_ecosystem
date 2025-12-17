@@ -11,8 +11,8 @@ async function loadCategories() {
         console.error('Error loading categories:', error);
         // Fallback to hardcoded list if fetch fails
         const fallbackCategories = [
-            "Web App", "Mobile App", "SaaS", "E-commerce", "EdTech", 
-            "FinTech", "HealthTech", "AgriTech", "AI/ML", "IoT", 
+            "Web App", "Mobile App", "SaaS", "E-commerce", "EdTech",
+            "FinTech", "Gaming", "HealthTech", "AgriTech", "AI/ML", "IoT",
             "Developer Tools", "Community", "Other"
         ];
         validCategoriesCache.push(...fallbackCategories);
@@ -27,9 +27,9 @@ async function loadProjects() {
             loadCategories(),
             fetch('projects.json')
         ]);
-        
+
         const data = await projectsResponse.json();
-        
+
         // Validate categories
         if (data.projects) {
             data.projects.forEach(project => {
@@ -38,7 +38,7 @@ async function loadProjects() {
                 }
             });
         }
-        
+
         displayProjects(data.projects);
         updateStats(data.projects);
     } catch (error) {
@@ -53,7 +53,7 @@ function isValidCategory(category) {
 
 function displayProjects(projects) {
     const container = document.getElementById('projects-container');
-    
+
     if (!projects || projects.length === 0) {
         displayNoProjects();
         return;
@@ -100,7 +100,7 @@ function displayNoProjects() {
 function updateStats(projects) {
     const projectCount = projects ? projects.length : 0;
     const categories = projects ? new Set(projects.map(p => p.category)).size : 0;
-    
+
     document.getElementById('project-count').textContent = projectCount;
     document.getElementById('category-count').textContent = categories;
 }
@@ -125,4 +125,40 @@ function isValidUrl(url) {
 }
 
 // Load projects when the page loads
-document.addEventListener('DOMContentLoaded', loadProjects);
+document.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+    setupThemeToggle();
+});
+
+// Theme Toggle Logic
+function setupThemeToggle() {
+    const toggleButton = document.getElementById('theme-toggle');
+    const sunIcon = toggleButton.querySelector('.sun-icon');
+    const moonIcon = toggleButton.querySelector('.moon-icon');
+
+    // Check for saved preference or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.body.classList.add('dark-mode');
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+
+    // Toggle theme on click
+    toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+
+        // Update icons
+        sunIcon.style.display = isDark ? 'block' : 'none';
+        moonIcon.style.display = isDark ? 'none' : 'block';
+
+        // Save preference
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+}

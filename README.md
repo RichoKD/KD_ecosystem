@@ -57,6 +57,7 @@ The `category` field **must be exactly one of these values** (case-sensitive):
 - E-commerce
 - EdTech
 - FinTech
+- Gaming
 - HealthTech
 - AgriTech
 - AI/ML
