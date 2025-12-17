@@ -48,9 +48,9 @@ Add your project to `projects.json`:
 }
 ```
 
-## 📋 Categories
+## 📋 Categories (Enum)
 
-Choose from:
+The `category` field **must be exactly one of these values** (case-sensitive):
 - Web App
 - Mobile App
 - SaaS
@@ -64,6 +64,8 @@ Choose from:
 - Developer Tools
 - Community
 - Other
+
+These categories are validated by the website. See [categories.json](categories.json) for the definitive list.
 
 ## 🛠️ Local Development
 

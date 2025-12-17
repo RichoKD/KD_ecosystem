@@ -1,8 +1,38 @@
+// Valid categories enum
+let VALID_CATEGORIES = [];
+
+// Load valid categories
+async function loadCategories() {
+    try {
+        const response = await fetch('categories.json');
+        const data = await response.json();
+        VALID_CATEGORIES = data.categories;
+    } catch (error) {
+        console.error('Error loading categories:', error);
+        // Fallback to hardcoded list if fetch fails
+        VALID_CATEGORIES = [
+            "Web App", "Mobile App", "SaaS", "E-commerce", "EdTech", 
+            "FinTech", "HealthTech", "AgriTech", "AI/ML", "IoT", 
+            "Developer Tools", "Community", "Other"
+        ];
+    }
+}
+
 // Load and display projects
 async function loadProjects() {
     try {
+        await loadCategories();
         const response = await fetch('projects.json');
         const data = await response.json();
+        
+        // Validate categories
+        if (data.projects) {
+            data.projects.forEach(project => {
+                if (!isValidCategory(project.category)) {
+                    console.warn(`Invalid category "${project.category}" for project "${project.name}". Valid categories are: ${VALID_CATEGORIES.join(', ')}`);
+                }
+            });
+        }
         
         displayProjects(data.projects);
         updateStats(data.projects);
@@ -10,6 +40,10 @@ async function loadProjects() {
         console.error('Error loading projects:', error);
         displayNoProjects();
     }
+}
+
+function isValidCategory(category) {
+    return VALID_CATEGORIES.includes(category);
 }
 
 function displayProjects(projects) {

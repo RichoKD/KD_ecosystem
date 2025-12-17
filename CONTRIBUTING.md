@@ -41,7 +41,20 @@ We welcome submissions from:
 #### Required Fields
 
 - **name**: Your project's name
-- **category**: Choose from: Web App, Mobile App, SaaS, E-commerce, EdTech, FinTech, HealthTech, AgriTech, AI/ML, IoT, Developer Tools, Community, Other
+- **category**: **Must be exactly one of these values** (case-sensitive):
+  - Web App
+  - Mobile App
+  - SaaS
+  - E-commerce
+  - EdTech
+  - FinTech
+  - HealthTech
+  - AgriTech
+  - AI/ML
+  - IoT
+  - Developer Tools
+  - Community
+  - Other
 - **description**: Brief description (2-3 sentences, ~100 words max)
 - **techStack**: Array of main technologies used
 - **contactName**: Your name or team name
@@ -54,6 +67,8 @@ We welcome submissions from:
 - **twitter**: Twitter/X profile URL (omit field if not provided)
 
 **Note:** For optional fields, simply omit them from your JSON entry if you don't have them. Do not use empty strings.
+
+**Important:** The `category` field must match exactly one of the valid categories listed above (including proper capitalization). The website validates categories and will log warnings for invalid values.
 
 ### Step 4: Submit a Pull Request
 
