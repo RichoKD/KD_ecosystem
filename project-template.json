@@ -1,0 +1,15 @@
+{
+  "name": "Your Project Name",
+  "category": "REQUIRED: Must be one of: Web App, Mobile App, SaaS, E-commerce, EdTech, FinTech, HealthTech, AgriTech, AI/ML, IoT, Developer Tools, Community, Other",
+  "description": "A clear, concise description of your project. Explain what it does, the problem it solves, or the impact it makes. Keep it to 2-3 sentences.",
+  "techStack": [
+    "Technology 1",
+    "Technology 2",
+    "Technology 3"
+  ],
+  "contactName": "Your Name or Team Name",
+  "contactEmail": "optional@email.com (optional - omit this field if not provided)",
+  "website": "https://yourproject.com (optional - omit this field if not provided)",
+  "github": "https://github.com/username/project (optional - omit this field if not provided)",
+  "twitter": "https://twitter.com/yourhandle (optional - omit this field if not provided)"
+}
