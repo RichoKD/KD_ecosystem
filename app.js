@@ -19,6 +19,9 @@ async function loadCategories() {
     }
 }
 
+let allProjects = [];
+let currentCategory = 'All';
+
 // Load and display projects
 async function loadProjects() {
     try {
@@ -29,22 +32,52 @@ async function loadProjects() {
         ]);
 
         const data = await projectsResponse.json();
+        allProjects = data.projects || [];
 
         // Validate categories
-        if (data.projects) {
-            data.projects.forEach(project => {
+        if (allProjects.length > 0) {
+            allProjects.forEach(project => {
                 if (!isValidCategory(project.category)) {
                     console.warn(`Invalid category "${project.category}" for project "${project.name}". Valid categories are: ${validCategoriesCache.join(', ')}`);
                 }
             });
         }
 
-        displayProjects(data.projects);
-        updateStats(data.projects);
+        renderCategoryFilters();
+        // Initial display
+        filterProjects('All');
+        updateStats(allProjects);
     } catch (error) {
         console.error('Error loading projects:', error);
         displayNoProjects();
     }
+}
+
+function renderCategoryFilters() {
+    const filtersContainer = document.getElementById('category-filters');
+    const categories = ['All', ...validCategoriesCache];
+
+    filtersContainer.innerHTML = categories.map(category => `
+        <button class="filter-btn ${category === 'All' ? 'active' : ''}" 
+                onclick="filterProjects('${category}')">
+            ${category}
+        </button>
+    `).join('');
+}
+
+function filterProjects(category) {
+    currentCategory = category;
+
+    // Update active button state
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === category);
+    });
+
+    const filtered = category === 'All'
+        ? allProjects
+        : allProjects.filter(p => p.category === category);
+
+    displayProjects(filtered);
 }
 
 function isValidCategory(category) {
@@ -55,7 +88,16 @@ function displayProjects(projects) {
     const container = document.getElementById('projects-container');
 
     if (!projects || projects.length === 0) {
-        displayNoProjects();
+        if (currentCategory !== 'All') {
+            container.innerHTML = `
+                <div class="no-projects">
+                    <h3>No projects found</h3>
+                    <p>There are no projects in the "${currentCategory}" category yet.</p>
+                </div>
+            `;
+        } else {
+            displayNoProjects();
+        }
         return;
     }
 
@@ -128,6 +170,9 @@ function isValidUrl(url) {
 document.addEventListener('DOMContentLoaded', () => {
     loadProjects();
     setupThemeToggle();
+
+    // Expose filterProjects to global scope for the inline onclick handlers
+    window.filterProjects = filterProjects;
 });
 
 // Theme Toggle Logic
