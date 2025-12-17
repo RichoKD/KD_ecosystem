@@ -1,35 +1,40 @@
-// Valid categories enum
-let VALID_CATEGORIES = [];
+// Valid categories cache
+const validCategoriesCache = [];
 
 // Load valid categories
 async function loadCategories() {
     try {
         const response = await fetch('categories.json');
         const data = await response.json();
-        VALID_CATEGORIES = data.categories;
+        validCategoriesCache.push(...data.categories);
     } catch (error) {
         console.error('Error loading categories:', error);
         // Fallback to hardcoded list if fetch fails
-        VALID_CATEGORIES = [
+        const fallbackCategories = [
             "Web App", "Mobile App", "SaaS", "E-commerce", "EdTech", 
             "FinTech", "HealthTech", "AgriTech", "AI/ML", "IoT", 
             "Developer Tools", "Community", "Other"
         ];
+        validCategoriesCache.push(...fallbackCategories);
     }
 }
 
 // Load and display projects
 async function loadProjects() {
     try {
-        await loadCategories();
-        const response = await fetch('projects.json');
-        const data = await response.json();
+        // Load categories and projects in parallel for better performance
+        const [_, projectsResponse] = await Promise.all([
+            loadCategories(),
+            fetch('projects.json')
+        ]);
+        
+        const data = await projectsResponse.json();
         
         // Validate categories
         if (data.projects) {
             data.projects.forEach(project => {
                 if (!isValidCategory(project.category)) {
-                    console.warn(`Invalid category "${project.category}" for project "${project.name}". Valid categories are: ${VALID_CATEGORIES.join(', ')}`);
+                    console.warn(`Invalid category "${project.category}" for project "${project.name}". Valid categories are: ${validCategoriesCache.join(', ')}`);
                 }
             });
         }
@@ -43,7 +48,7 @@ async function loadProjects() {
 }
 
 function isValidCategory(category) {
-    return VALID_CATEGORIES.includes(category);
+    return validCategoriesCache.includes(category);
 }
 
 function displayProjects(projects) {
