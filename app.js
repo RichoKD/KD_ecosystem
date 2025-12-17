@@ -40,9 +40,9 @@ function displayProjects(projects) {
             </div>
             
             <div class="project-links">
-                ${project.website ? `<a href="${escapeHtml(project.website)}" class="project-link" target="_blank" rel="noopener noreferrer">Website</a>` : ''}
-                ${project.github ? `<a href="${escapeHtml(project.github)}" class="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
-                ${project.twitter ? `<a href="${escapeHtml(project.twitter)}" class="project-link" target="_blank" rel="noopener noreferrer">Twitter</a>` : ''}
+                ${project.website && isValidUrl(project.website) ? `<a href="${escapeHtml(project.website)}" class="project-link" target="_blank" rel="noopener noreferrer">Website</a>` : ''}
+                ${project.github && isValidUrl(project.github) ? `<a href="${escapeHtml(project.github)}" class="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+                ${project.twitter && isValidUrl(project.twitter) ? `<a href="${escapeHtml(project.twitter)}" class="project-link" target="_blank" rel="noopener noreferrer">Twitter</a>` : ''}
             </div>
         </div>
     `).join('');
@@ -67,9 +67,22 @@ function updateStats(projects) {
 }
 
 function escapeHtml(text) {
+    if (text === null || text === undefined) {
+        return '';
+    }
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+function isValidUrl(url) {
+    if (!url) return false;
+    try {
+        const urlObj = new URL(url);
+        return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+    } catch {
+        return false;
+    }
 }
 
 // Load projects when the page loads

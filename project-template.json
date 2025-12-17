@@ -8,8 +8,8 @@
     "Technology 3"
   ],
   "contactName": "Your Name or Team Name",
-  "contactEmail": "optional@email.com (leave empty string if not provided)",
-  "website": "https://yourproject.com (leave empty string if not provided)",
-  "github": "https://github.com/username/project (leave empty string if not provided)",
-  "twitter": "https://twitter.com/yourhandle (leave empty string if not provided)"
+  "contactEmail": "optional@email.com (optional - omit this field if not provided)",
+  "website": "https://yourproject.com (optional - omit this field if not provided)",
+  "github": "https://github.com/username/project (optional - omit this field if not provided)",
+  "twitter": "https://twitter.com/yourhandle (optional - omit this field if not provided)"
 }

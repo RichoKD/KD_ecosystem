@@ -48,10 +48,12 @@ We welcome submissions from:
 
 #### Optional Fields
 
-- **contactEmail**: Email address for contact
-- **website**: Project website URL
-- **github**: GitHub repository URL
-- **twitter**: Twitter/X profile URL
+- **contactEmail**: Email address for contact (omit field if not provided)
+- **website**: Project website URL (omit field if not provided)
+- **github**: GitHub repository URL (omit field if not provided)
+- **twitter**: Twitter/X profile URL (omit field if not provided)
+
+**Note:** For optional fields, simply omit them from your JSON entry if you don't have them. Do not use empty strings.
 
 ### Step 4: Submit a Pull Request
 
@@ -86,7 +88,7 @@ We welcome submissions from:
 
 - Ensure all URLs start with `https://` or `http://`
 - Test that all links work before submitting
-- Use empty string `""` if you don't have a particular link
+- Omit optional URL fields if you don't have them (don't use empty strings)
 
 ## Example Submission
 
@@ -103,6 +105,19 @@ Here's a complete example:
   "website": "https://kaddevhub.com",
   "github": "https://github.com/kaddevhub/platform",
   "twitter": "https://twitter.com/kaddevhub"
+}
+```
+
+**Example with minimal fields (omitting optional ones):**
+
+```json
+{
+  "name": "KadunaCode",
+  "category": "Developer Tools",
+  "description": "An open-source code editor optimized for Nigerian developers with local language support and offline documentation.",
+  "techStack": ["Electron", "TypeScript", "Monaco Editor"],
+  "contactName": "Developer Team",
+  "github": "https://github.com/kadunacode/editor"
 }
 ```
 
