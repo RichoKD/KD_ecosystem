@@ -4,11 +4,16 @@
       "name": "Kaduna Tech Ecosystem",
       "category": "Community",
       "description": "A showcase platform for tech projects and innovations in Kaduna. This platform helps connect local developers, startups, and tech enthusiasts.",
-      "techStack": ["HTML", "CSS", "JavaScript", "GitHub Pages"],
+      "techStack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "GitHub Pages"
+      ],
       "contactName": "RichoKD",
       "website": "https://richokd.github.io/KD_ecosystem/",
       "github": "https://github.com/RichoKD/KD_ecosystem",
-      "twitter": ""
+      "twitter": "https://x.com/RicoKD_z2"
     }
   ]
 }
